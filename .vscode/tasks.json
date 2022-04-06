@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Show output",
+			"type": "shell",
+			"command": "mspaint \"${workspaceFolder}\\private\\output.png\"",
+			"problemMatcher": []
+		}
+	]
+}

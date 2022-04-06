@@ -1,0 +1,14 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Launch app",
+			"request": "launch",
+			"mainClass": "MyRenderer.App",
+			"projectName": "MyRenderer",
+			"args": [ "${workspaceFolder}/private/output.png", "300", "200" ],
+			"postDebugTask": "Show output"
+		}
+	]
+}
