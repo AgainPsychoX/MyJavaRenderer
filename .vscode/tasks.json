@@ -2,10 +2,22 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "Clear output",
+			"type": "shell",
+			"command": "try { rm \"${workspaceFolder}\\private\\output.png\"; } catch {}; 1",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "silent"
+			}
+		},
+		{
 			"label": "Show output",
 			"type": "shell",
-			"command": "mspaint \"${workspaceFolder}\\private\\output.png\"",
-			"problemMatcher": []
-		}
+			"command": "if (test-path \"${workspaceFolder}\\private\\output.png\") { mspaint \"${workspaceFolder}\\private\\output.png\"; }",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "silent",
+			}
+		},
 	]
 }
