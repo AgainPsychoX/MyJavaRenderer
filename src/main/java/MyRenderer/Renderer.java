@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Renderer {
 	public enum LineAlgorithm {
@@ -12,19 +14,41 @@ public class Renderer {
 		DDA, 
 		BRESENHAM, 
 		BRESENHAM_INT;
+
+		static LineAlgorithm parse(String string) {
+			string = string.toLowerCase();
+			if (string.contains("naive")) return NAIVE;
+			if (string.contains("dda")) return DDA;
+			if (string.contains("bresenham")) {
+				if (string.contains("int")) 
+					return BRESENHAM_INT;
+				else
+					return BRESENHAM;
+			}
+			Logger.getLogger(LineAlgorithm.class.getName()).log(Level.WARNING, "Invalid line algorithm name, falling back to default " + DEFAULT.toString());
+			return DEFAULT;
+		}
+
+		final static LineAlgorithm DEFAULT = LineAlgorithm.NAIVE;
 	}
 
 	private BufferedImage render;
 	public final int height;
 	public final int width;
+	public LineAlgorithm lineAlgorithm;
 
 	private String filename;
 
 	public Renderer(String filename, int width, int height) {
+		this(filename, width, height, LineAlgorithm.DEFAULT);
+	}
+
+	public Renderer(String filename, int width, int height, LineAlgorithm lineAlgorithm) {
 		render = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		this.filename = filename;
 		this.width = width;
 		this.height = height;
+		this.lineAlgorithm = lineAlgorithm;
 	}
 
 	public void drawPoint(int x, int y) {
@@ -32,6 +56,10 @@ public class Renderer {
 		render.setRGB(x, y, white);
 	}
 
+	public void drawLine(int x0, int y0, int x1, int y1) {
+		drawLine(x0, y0, x1, y1, lineAlgorithm);
+	}
+	
 	public void drawLine(int x0, int y0, int x1, int y1, LineAlgorithm lineAlgorithm) {
 		switch (lineAlgorithm) {
 			case NAIVE:         drawLineNaive(x0, y0, x1, y1);        break;

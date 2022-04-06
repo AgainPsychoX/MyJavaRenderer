@@ -11,11 +11,12 @@ public class App {
 		final String filePath = args.length >= 1 ? args[0] : (System.getProperty("user.home") + "/render.png");
 		final int width = args.length >= 2 ? Integer.parseInt(args[1]) : 200;
 		final int height = args.length >= 3 ? Integer.parseInt(args[2]) : width;
+		final LineAlgorithm lineAlgorithm = args.length >= 4 ? LineAlgorithm.parse(args[3]) : LineAlgorithm.DEFAULT;
 
-		Renderer mainRenderer = new Renderer(filePath, width, height);
+		Renderer mainRenderer = new Renderer(filePath, width, height, lineAlgorithm);
 		mainRenderer.clear();
 		mainRenderer.drawPoint(100, 100);
-		mainRenderer.drawLine(0, 0, 100, 50, LineAlgorithm.NAIVE);
+		mainRenderer.drawLine(0, 0, 100, 50);
 
 		try {
 			mainRenderer.save();
