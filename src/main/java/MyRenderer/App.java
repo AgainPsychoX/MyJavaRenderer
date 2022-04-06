@@ -16,7 +16,7 @@ public class App {
 		Renderer mainRenderer = new Renderer(filePath, width, height, lineAlgorithm);
 		mainRenderer.clear();
 		mainRenderer.drawPoint(100, 100);
-		testLinesAllDirections(mainRenderer, 100, 100, 50, 5);
+		testLinesAllDirections(mainRenderer, 100, 100, 50, 5, 24);
 
 		try {
 			mainRenderer.save();
@@ -25,10 +25,14 @@ public class App {
 		}
 	}
 
-	public static void testLinesAllDirections(Renderer renderer, int cx, int cy, int size, int spacing) {
-		final double angleStep = 1.0 / 8 * Math.PI;
+	public static void testLinesAllDirections(final Renderer renderer, final int cx, final int cy, final int size, final int spacing) {
+		testLinesAllDirections(renderer, cx, cy, size, spacing, 16);
+	}
+
+	public static void testLinesAllDirections(final Renderer renderer, final int cx, final int cy, final int size, final int spacing, final int slices) {
+		final double angleStep = Math.PI * 2 / slices;
 		double angle = 0;
-		for (int i = 0; i < 16; i++, angle += angleStep) {
+		for (int i = 0; i < slices; i++, angle += angleStep) {
 			final int x0 = (int) (cx + Math.round(Math.cos(angle) * spacing));
 			final int y0 = (int) (cy + Math.round(Math.sin(angle) * spacing));
 			final int x1 = (int) (cx + Math.round(Math.cos(angle) * size));
@@ -36,7 +40,5 @@ public class App {
 			renderer.drawLine(x0, y0, x1, y1);
 			System.out.println("%d\t%.4f\tA:\t%d\t%d\tB:\t%d\t%d".formatted(i, angle, x0, y0, x1, y1));
 		}
-		// Poprawne linie można zaobserwować tylko dla linii mających tylko jeden piksel w y dla danego x.
-		// Oktanty: 8, 7
 	}
 }
