@@ -3,5 +3,6 @@
 		"BRESENHAM",
 		"derr"
 	],
-	"java.configuration.updateBuildConfiguration": "interactive"
+	"java.configuration.updateBuildConfiguration": "interactive",
+	"java.autobuild.enabled": true
 }

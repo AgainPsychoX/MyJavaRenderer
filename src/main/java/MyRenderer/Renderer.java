@@ -69,12 +69,60 @@ public class Renderer {
 		}
 	}
 
-	public void drawLineNaive(int x0, int y0, int x1, int y1) {
-		final float a = ((float)y0 - y1) / ((float)x0 - x1);
+	public void drawHorizontalLine(int x, final int y, int length) {
+		while (length --> 0) {
+			drawPoint(x++, y);
+		}
+	}
+
+	public void drawVerticalLine(final int x, int y, int length) {
+		while (length --> 0) {
+			drawPoint(x, y++);
+		}
+	}
+
+	public void drawLineNaive(final int x0, final int y0, final int x1, final int y1) {
+		if (x1 < x0) {
+			drawLineNaive(x1, y1, x0, y0);
+			return;
+		}	
+		final int dx = x1 - x0;
+		final int dy = y1 - y0;
+		if (dy == 0) {
+			drawHorizontalLine(x0, y0, dx);
+			return;
+		}
+		if (dx == 0) {
+			if (dy < 0) {
+				drawVerticalLine(x0, y1, -dy);
+				return;
+			}
+			else {
+				drawVerticalLine(x0, y0, dy);
+				return;
+			}
+		}
+		final float a = (float) dy / dx;
 		final float b = y0 - a * x0;
-		for (int x = x0; x <= x1; x++) {
-			final int y = Math.round(a * x + b);
-			this.drawPoint(x, y);
+		if (Math.abs(dy) <= dx) {
+			for (int x = x0; x <= x1; x++) {
+				final int y = Math.round(a * x + b);
+				this.drawPoint(x, y);
+			}
+		}
+		else {
+			if (dy < 0) {
+				for (int y = y1; y <= y0; y++) {
+					final int x = Math.round((y - b) / a);
+					this.drawPoint(x, y);
+				}
+			}
+			else {
+				for (int y = y0; y <= y1; y++) {
+					final int x = Math.round((y - b) / a);
+					this.drawPoint(x, y);
+				}
+			}
 		}
 	}
 
@@ -83,6 +131,10 @@ public class Renderer {
 	}
 
 	public void drawLineBresenham(int x0, int y0, int x1, int y1) {
+		if (x1 < x0) {
+			drawLineBresenham(x1, y1, x0, y0);
+			return;
+		}
 		final int dx = x1 - x0;
 		final int dy = y1 - y0;
 		final float derr = Math.abs((float)dy / dx);
