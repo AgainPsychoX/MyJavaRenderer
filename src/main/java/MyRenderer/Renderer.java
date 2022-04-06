@@ -29,7 +29,7 @@ public class Renderer {
 			return DEFAULT;
 		}
 
-		final static LineAlgorithm DEFAULT = LineAlgorithm.NAIVE;
+		final static LineAlgorithm DEFAULT = LineAlgorithm.BRESENHAM;
 	}
 
 	private BufferedImage render;
@@ -83,7 +83,20 @@ public class Renderer {
 	}
 
 	public void drawLineBresenham(int x0, int y0, int x1, int y1) {
-		// TODO: zaimplementuj
+		final int dx = x1 - x0;
+		final int dy = y1 - y0;
+		final float derr = Math.abs((float)dy / dx);
+		float err = 0;
+		int y = y0;
+
+		for (int x = x0; x <= x1; x++) {
+			drawPoint(x, y);
+			err += derr;
+			if (err > 0.5) {
+				y += (y1 > y0 ? 1 : -1);
+				err -= 1.;
+			}
+		}
 	}
 
 	public void drawLineBresenhamInt(int x0, int y0, int x1, int y1) {
