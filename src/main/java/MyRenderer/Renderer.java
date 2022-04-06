@@ -29,7 +29,7 @@ public class Renderer {
 			return DEFAULT;
 		}
 
-		final static LineAlgorithm DEFAULT = LineAlgorithm.BRESENHAM;
+		final static LineAlgorithm DEFAULT = LineAlgorithm.BRESENHAM_INT;
 	}
 
 	private BufferedImage render;
@@ -203,8 +203,49 @@ public class Renderer {
 		}
 	}
 
-	public void drawLineBresenhamInt(int x0, int y0, int x1, int y1) {
-		// TODO: zaimplementuj
+	public void drawLineBresenhamInt(final int x0, final int y0, final int x1, final int y1) {
+		if (x1 < x0) {
+			drawLineBresenhamInt(x1, y1, x0, y0);
+			return;
+		}
+
+		final int dx = x1 - x0;
+		int dy = y1 - y0;
+		if (dy == 0) {
+			drawHorizontalLine(x0, y0, dx);
+			return;
+		}
+		if (dx == 0) {
+			if (dy < 0) {
+				drawVerticalLine(x0, y1, -dy);
+				return;
+			}
+			else {
+				drawVerticalLine(x0, y0, dy);
+				return;
+			}
+		}
+		dy = Math.abs(dy);
+
+		int err = dx - dy;
+		int x = x0;
+		int y = y0;
+		while (true) {
+			drawPoint(x, y);
+			if (x == x1 && y == y1) {
+				break;
+			}
+
+			final int e2 = err * 2;
+			if (-e2 <= dy) {
+				err -= dy;
+				x += 1;
+			}
+			if (e2 <= dx) {
+				err += dx;
+				y += (y1 > y0 ? 1 : -1);
+			}
+		}
 	}
 
 	public void save() throws IOException {
