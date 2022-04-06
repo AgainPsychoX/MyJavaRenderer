@@ -23,3 +23,13 @@ tasks.named<Test>("test") {
 		events("passed", "skipped", "failed")
 	}
 }
+
+tasks.jar {
+	manifest.attributes["Main-Class"] = "MyRenderer.App"
+	val dependencies = configurations
+		.runtimeClasspath
+		.get()
+		.map(::zipTree)
+	from(dependencies)
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
