@@ -86,6 +86,7 @@ public class Renderer {
 			drawLineNaive(x1, y1, x0, y0);
 			return;
 		}
+
 		final int dx = x1 - x0;
 		final int dy = y1 - y0;
 		if (dy == 0) {
@@ -102,6 +103,7 @@ public class Renderer {
 				return;
 			}
 		}
+
 		final float a = (float) dy / dx;
 		final float b = y0 - a * x0;
 		for (int x = x0; x <= x1; x++) {
@@ -114,7 +116,8 @@ public class Renderer {
 		if (x1 < x0) {
 			drawLineDDA(x1, y1, x0, y0);
 			return;
-		}	
+		}
+
 		final int dx = x1 - x0;
 		final int dy = y1 - y0;
 		if (dy == 0) {
@@ -131,6 +134,7 @@ public class Renderer {
 				return;
 			}
 		}
+
 		final float a = (float) dy / dx;
 		final float b = y0 - a * x0;
 		if (Math.abs(dy) <= dx) {
@@ -155,20 +159,43 @@ public class Renderer {
 		}
 	}
 
-	public void drawLineBresenham(int x0, int y0, int x1, int y1) {
+	public void drawLineBresenham(final int x0, final int y0, final int x1, final int y1) {
 		if (x1 < x0) {
 			drawLineBresenham(x1, y1, x0, y0);
 			return;
 		}
+
 		final int dx = x1 - x0;
 		final int dy = y1 - y0;
+		if (dy == 0) {
+			drawHorizontalLine(x0, y0, dx);
+			return;
+		}
+		if (dx == 0) {
+			if (dy < 0) {
+				drawVerticalLine(x0, y1, -dy);
+				return;
+			}
+			else {
+				drawVerticalLine(x0, y0, dy);
+				return;
+			}
+		}
+
 		final float derr = Math.abs((float)dy / dx);
 		float err = 0;
+		int x = x0;
 		int y = y0;
-
-		for (int x = x0; x <= x1; x++) {
+		while (true) {
 			drawPoint(x, y);
-			err += derr;
+			if (x == x1 && y == y1) {
+				break;
+			}
+
+			if (err < 0.5) {
+				x += 1;
+				err += derr;
+			}
 			if (err > 0.5) {
 				y += (y1 > y0 ? 1 : -1);
 				err -= 1.;
