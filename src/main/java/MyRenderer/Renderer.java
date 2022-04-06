@@ -19,7 +19,7 @@ public class Renderer {
 			string = string.toLowerCase();
 			if (string.contains("naive")) return NAIVE;
 			if (string.contains("dda")) return DDA;
-			if (string.contains("bresenham")) {
+			if (string.contains("bresen")) {
 				if (string.contains("int")) 
 					return BRESENHAM_INT;
 				else
@@ -81,9 +81,38 @@ public class Renderer {
 		}
 	}
 
-	public void drawLineNaive(final int x0, final int y0, final int x1, final int y1) {
+	public void drawLineNaive(int x0, int y0, int x1, int y1) {
 		if (x1 < x0) {
 			drawLineNaive(x1, y1, x0, y0);
+			return;
+		}
+		final int dx = x1 - x0;
+		final int dy = y1 - y0;
+		if (dy == 0) {
+			drawHorizontalLine(x0, y0, dx);
+			return;
+		}
+		if (dx == 0) {
+			if (dy < 0) {
+				drawVerticalLine(x0, y1, -dy);
+				return;
+			}
+			else {
+				drawVerticalLine(x0, y0, dy);
+				return;
+			}
+		}
+		final float a = (float) dy / dx;
+		final float b = y0 - a * x0;
+		for (int x = x0; x <= x1; x++) {
+			final int y = Math.round(a * x + b);
+			this.drawPoint(x, y);
+		}
+	}
+
+	public void drawLineDDA(final int x0, final int y0, final int x1, final int y1) {
+		if (x1 < x0) {
+			drawLineDDA(x1, y1, x0, y0);
 			return;
 		}	
 		final int dx = x1 - x0;
@@ -124,10 +153,6 @@ public class Renderer {
 				}
 			}
 		}
-	}
-
-	public void drawLineDDA(int x0, int y0, int x1, int y1) {
-		// TODO: zaimplementuj
 	}
 
 	public void drawLineBresenham(int x0, int y0, int x1, int y1) {
