@@ -42,7 +42,12 @@ public class Renderer {
 	}
 
 	public void drawLineNaive(int x0, int y0, int x1, int y1) {
-		// TODO: zaimplementuj
+		final float a = ((float)y0 - y1) / ((float)x0 - x1);
+		final float b = y0 - a * x0;
+		for (int x = x0; x <= x1; x++) {
+			final int y = Math.round(a * x + b);
+			this.drawPoint(x, y);
+		}
 	}
 
 	public void drawLineDDA(int x0, int y0, int x1, int y1) {
