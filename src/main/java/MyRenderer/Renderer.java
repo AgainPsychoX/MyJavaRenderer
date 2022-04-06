@@ -21,7 +21,7 @@ public class Renderer {
 	private String filename;
 
 	public Renderer(String filename, int width, int height) {
-		render = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
+		render = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		this.filename = filename;
 		this.width = width;
 		this.height = height;
