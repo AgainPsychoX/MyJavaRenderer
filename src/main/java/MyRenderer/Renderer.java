@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import MyRenderer.math.Vec2f;
 import MyRenderer.math.Vec3f;
+import MyRenderer.math.Vec3i;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -254,6 +255,12 @@ public class Renderer {
 
 	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C) {
 		final int white = 0 | (0 << 8) | (0 << 16) | (0 << 24);
+		drawTriangle(A, B, C, white);
+	}
+	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, Vec3i color) {
+		drawTriangle(A, B, C, color.toColorARGB());
+	}
+	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, int color) {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				final var barycentric = Vec3f.barycentric(A, B, C, new Vec2f(x, y));
@@ -262,11 +269,11 @@ public class Renderer {
 					0 <= barycentric.y && barycentric.y <= 1 &&
 					0 <= barycentric.z && barycentric.z <= 1
 				) {
-					render.setRGB(x, y, white);
+					render.setRGB(x, y, color);
 				}
 			}
 		}
-	} 
+	}
 
 	public void save() throws IOException {
 		File outputFile = new File(filename);
@@ -291,5 +298,9 @@ public class Renderer {
 		g.drawImage(img, 0, 0, w, h, 0, h, w, 0, null);
 		g.dispose();
 		return flippedImage;
+	}
+
+	public int colorFromRGBA(int red, int green, int blue, int alpha) {
+		return ((alpha & 0xFF) << 24) | ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF);
 	}
 }

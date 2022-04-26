@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import MyRenderer.Renderer.LineAlgorithm;
 import MyRenderer.math.Vec2f;
+import MyRenderer.math.Vec3i;
 
 public class App {
 	public static void main(String[] args) {
@@ -17,9 +18,16 @@ public class App {
 		Renderer mainRenderer = new Renderer(filePath, width, height, lineAlgorithm);
 		mainRenderer.clear();
 		mainRenderer.drawTriangle(
+			new Vec2f(50 + 10, 50 - 10),
+			new Vec2f(100 + 10, 150 - 10),
+			new Vec2f(250 + 10, 100 - 10),
+			mainRenderer.colorFromRGBA(208, 244, 234, 255)
+		);
+		mainRenderer.drawTriangle(
 			new Vec2f(50, 50),
 			new Vec2f(100, 150),
-			new Vec2f(250, 100)
+			new Vec2f(250, 100),
+			new Vec3i(177, 204, 116)
 		);
 
 		try {

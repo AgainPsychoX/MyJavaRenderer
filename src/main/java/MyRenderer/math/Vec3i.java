@@ -15,4 +15,11 @@ public class Vec3i {
 		this.y = y;
 		this.z = z;
 	}
+
+	public int toColorARGB() {
+		return toColorARGB((byte) 0xFF);
+	}
+	public int toColorARGB(byte alpha) {
+		return alpha << 24 | ((x & 0xFF) << 16) | ((y & 0xFF) << 8) | (z & 0xFF);
+	}
 }
