@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MyRenderer.Renderer.LineAlgorithm;
+import MyRenderer.math.Vec2f;
 
 public class App {
 	public static void main(String[] args) {
@@ -15,8 +16,11 @@ public class App {
 
 		Renderer mainRenderer = new Renderer(filePath, width, height, lineAlgorithm);
 		mainRenderer.clear();
-		mainRenderer.drawPoint(100, 100);
-		testLinesAllDirections(mainRenderer, 100, 100, 50, 5, 24);
+		mainRenderer.drawTriangle(
+			new Vec2f(50, 50),
+			new Vec2f(100, 150),
+			new Vec2f(250, 100)
+		);
 
 		try {
 			mainRenderer.save();

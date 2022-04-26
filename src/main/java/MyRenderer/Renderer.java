@@ -5,6 +5,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+
+import MyRenderer.math.Vec2f;
+import MyRenderer.math.Vec3f;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -248,6 +252,22 @@ public class Renderer {
 		}
 	}
 
+	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C) {
+		final int white = 0 | (0 << 8) | (0 << 16) | (0 << 24);
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				final var barycentric = Vec3f.barycentric(A, B, C, new Vec2f(x, y));
+				if (
+					0 <= barycentric.x && barycentric.x <= 1 &&
+					0 <= barycentric.y && barycentric.y <= 1 &&
+					0 <= barycentric.z && barycentric.z <= 1
+				) {
+					render.setRGB(x, y, white);
+				}
+			}
+		}
+	} 
+
 	public void save() throws IOException {
 		File outputFile = new File(filename);
 		render = Renderer.verticalFlip(render);
@@ -255,9 +275,9 @@ public class Renderer {
 	}
 
 	public void clear() {
+		final int black = 0 | (0 << 8) | (0 << 16) | (255 << 24);
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				int black = 0 | (0 << 8) | (0 << 16) | (255 << 24);
 				render.setRGB(x, y, black);
 			}
 		}
