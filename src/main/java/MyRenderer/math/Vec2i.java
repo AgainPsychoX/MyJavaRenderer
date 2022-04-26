@@ -14,7 +14,16 @@ public class Vec2i {
 		this.y = y;
 	}
 
-	static Vec2i fromPoints(Vec2i a, Vec2i b) {
+	public static Vec2i fromPoints(Vec2i a, Vec2i b) {
 		return new Vec2i(a.x - b.x, a.y - b.y);
+	}
+
+	public Vec2i translate(Vec2i other) {
+		this.x += other.x;
+		this.y += other.y;
+		return this;
+	}
+	public Vec2i transformed(Vec2i other) {
+		return new Vec2i(this.x + other.x, this.y + other.y);
 	}
 }

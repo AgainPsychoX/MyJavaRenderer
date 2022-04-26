@@ -22,4 +22,14 @@ public class Vec3i {
 	public int toColorARGB(byte alpha) {
 		return alpha << 24 | ((x & 0xFF) << 16) | ((y & 0xFF) << 8) | (z & 0xFF);
 	}
+
+	public Vec3i translate(Vec3i other) {
+		this.x += other.x;
+		this.y += other.y;
+		this.z += other.z;
+		return this;
+	}
+	public Vec3i translated(Vec3i other) {
+		return new Vec3i(this.x + other.x, this.y + other.y, this.z + other.z);
+	}
 }

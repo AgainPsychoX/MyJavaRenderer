@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import MyRenderer.math.Vec2f;
+import MyRenderer.math.Vec2i;
 import MyRenderer.math.Vec3f;
 import MyRenderer.math.Vec3i;
 
@@ -42,6 +43,9 @@ public class Renderer {
 	public final int width;
 	public LineAlgorithm lineAlgorithm;
 
+	/// Color used to draw anything.
+	protected int color = white;
+
 	private String filename;
 
 	public Renderer(String filename, int width, int height) {
@@ -56,15 +60,18 @@ public class Renderer {
 		this.lineAlgorithm = lineAlgorithm;
 	}
 
+	private static final int white = 255 | (255 << 8) | (255 << 16) | (255 << 24);
+
 	public void drawPoint(int x, int y) {
-		int white = 255 | (255 << 8) | (255 << 16) | (255 << 24);
-		render.setRGB(x, y, white);
+		render.setRGB(x, y, color);
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
 		drawLine(x0, y0, x1, y1, lineAlgorithm);
 	}
-	
+	public void drawLine(Vec2i p0, Vec2i p1) {
+		drawLine(p0.x, p0.y, p1.x, p1.y, lineAlgorithm);
+	}
 	public void drawLine(int x0, int y0, int x1, int y1, LineAlgorithm lineAlgorithm) {
 		switch (lineAlgorithm) {
 			case NAIVE:         drawLineNaive(x0, y0, x1, y1);        break;
@@ -275,19 +282,21 @@ public class Renderer {
 		}
 	}
 
+	public void clear() {
+		clear(color);
+	}
+	public void clear(int color) {
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				render.setRGB(x, y, color);
+			}
+		}
+	}
+
 	public void save() throws IOException {
 		File outputFile = new File(filename);
 		render = Renderer.verticalFlip(render);
 		ImageIO.write(render, "png", outputFile);
-	}
-
-	public void clear() {
-		final int black = 0 | (0 << 8) | (0 << 16) | (255 << 24);
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				render.setRGB(x, y, black);
-			}
-		}
 	}
 
 	public static BufferedImage verticalFlip(BufferedImage img) {
@@ -302,5 +311,8 @@ public class Renderer {
 
 	public int colorFromRGBA(int red, int green, int blue, int alpha) {
 		return ((alpha & 0xFF) << 24) | ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF);
+	}
+	public int colorFromRGB(int red, int green, int blue) {
+		return colorFromRGBA(red, green, blue, 0xFF);
 	}
 }

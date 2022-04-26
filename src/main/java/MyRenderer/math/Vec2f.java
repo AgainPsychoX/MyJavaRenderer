@@ -30,11 +30,23 @@ public class Vec2f {
 		this.y = y;
 	}
 
-	static Vec2f fromVec2i(Vec2i i) {
+	public static Vec2f fromVec2i(Vec2i i) {
 		return new Vec2f(i.x, i.y);
 	}
+	public Vec2i toVec2i() {
+		return new Vec2i(Math.round(x), Math.round(y));
+	}
 
-	static Vec2f fromPoints(Vec2f a, Vec2f b) {
+	public static Vec2f fromPoints(Vec2f a, Vec2f b) {
 		return new Vec2f(a.x - b.x, a.y - b.y);
+	}
+
+	public Vec2f translate(Vec2f other) {
+		this.x += other.x;
+		this.y += other.y;
+		return this;
+	}
+	public Vec2f transformed(Vec2f other) {
+		return new Vec2f(this.x + other.x, this.y + other.y);
 	}
 }

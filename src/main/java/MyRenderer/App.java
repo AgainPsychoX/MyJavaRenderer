@@ -16,19 +16,35 @@ public class App {
 		final LineAlgorithm lineAlgorithm = args.length >= 4 ? LineAlgorithm.parse(args[3]) : LineAlgorithm.DEFAULT;
 
 		Renderer mainRenderer = new Renderer(filePath, width, height, lineAlgorithm);
-		mainRenderer.clear();
+
+		// Clear as black
+		final int black = 0xFF000000;
+		mainRenderer.clear(black);
+
+		final var A = new Vec2f(50, 50);
+		final var B = new Vec2f(100, 150);
+		final var C = new Vec2f(250, 100);
+
+		// Draw triangle "under"
+		final var offsetUnder = new Vec2f(10, -10);
 		mainRenderer.drawTriangle(
-			new Vec2f(50 + 10, 50 - 10),
-			new Vec2f(100 + 10, 150 - 10),
-			new Vec2f(250 + 10, 100 - 10),
+			A.transformed(offsetUnder),
+			B.transformed(offsetUnder),
+			C.transformed(offsetUnder),
 			mainRenderer.colorFromRGBA(208, 244, 234, 255)
 		);
+
+		// Draw main triangle
 		mainRenderer.drawTriangle(
-			new Vec2f(50, 50),
-			new Vec2f(100, 150),
-			new Vec2f(250, 100),
+			A, B, C,
 			new Vec3i(177, 204, 116)
 		);
+
+		// Draw lines around
+		mainRenderer.color = mainRenderer.colorFromRGB(130, 147, 153);
+		mainRenderer.drawLine(A.toVec2i(), B.toVec2i());
+		mainRenderer.drawLine(B.toVec2i(), C.toVec2i());
+		mainRenderer.drawLine(C.toVec2i(), A.toVec2i());
 
 		try {
 			mainRenderer.save();
