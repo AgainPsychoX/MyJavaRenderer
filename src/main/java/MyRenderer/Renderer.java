@@ -268,8 +268,12 @@ public class Renderer {
 		drawTriangle(A, B, C, color.toColorARGB());
 	}
 	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, int color) {
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
+		final var xMin = Math.max(Math.round(Math.min(A.x, Math.min(B.x, C.x))), 0);
+		final var xMax = Math.min(Math.round(Math.max(A.x, Math.max(B.x, C.x))), width);
+		final var yMin = Math.max(Math.round(Math.min(A.y, Math.min(B.y, C.y))), 0);
+		final var yMax = Math.min(Math.round(Math.max(A.y, Math.max(B.y, C.y))), height);
+		for (int x = xMin; x <= xMax; x++) {
+			for (int y = yMin; y <= yMax; y++) {
 				final var barycentric = Vec3f.barycentric(A, B, C, new Vec2f(x, y));
 				if (
 					0 <= barycentric.x && barycentric.x <= 1 &&
