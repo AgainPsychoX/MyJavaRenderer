@@ -7,7 +7,7 @@
 			"request": "launch",
 			"mainClass": "MyRenderer.App",
 			"projectName": "MyRenderer",
-			"args": [ "${workspaceFolder}/private/output.png", "300", "200", "bresenint" ],
+			"args": [ "${workspaceFolder}/private/output.png", "800", "800" ],
 			"preLaunchTask": "Clear output",
 			"postDebugTask": "Show output"
 		}

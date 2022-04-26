@@ -4,6 +4,10 @@ public class Vec2i {
 	public int x;
 	public int y;
 
+	public int get(int i) {
+		return i == 0 ? x : i == 1 ? y : 0;
+	}
+
 	@Override
 	public String toString() {
 		return x + " " + y;

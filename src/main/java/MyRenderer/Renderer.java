@@ -6,10 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-import MyRenderer.math.Vec2f;
-import MyRenderer.math.Vec2i;
-import MyRenderer.math.Vec3f;
-import MyRenderer.math.Vec3i;
+import MyRenderer.math.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -266,6 +263,14 @@ public class Renderer {
 	}
 	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, Vec3i color) {
 		drawTriangle(A, B, C, color.toColorARGB());
+	}
+	public void drawTriangle(Vec2i A, Vec2i B, Vec2i C, int color) {
+		drawTriangle(
+			Vec2f.fromVec2i(A), 
+			Vec2f.fromVec2i(B), 
+			Vec2f.fromVec2i(C), 
+			color
+		);
 	}
 	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, int color) {
 		final var xMin = Math.max(Math.round(Math.min(A.x, Math.min(B.x, C.x))), 0);

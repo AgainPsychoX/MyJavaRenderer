@@ -4,6 +4,10 @@ public class Vec2f {
 	public float x;
 	public float y;
 
+	public float get(int i) {
+		return i == 0 ? x : i == 1 ? y : 0;
+	}
+
 	@Override
 	public String toString() {
 		return x + " " + y;

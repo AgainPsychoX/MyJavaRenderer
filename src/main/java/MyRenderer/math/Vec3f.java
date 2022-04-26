@@ -3,6 +3,14 @@ package MyRenderer.math;
 public class Vec3f extends Vec2f {
 	public float z;
 
+	public float get(int i) {
+		return i == 0 ? x : i == 1 ? y : i == 2 ? z : 0;
+	}
+
+	public float length() {
+		return (float) Math.sqrt((x * x + y * y + z * z));
+	}
+
 	@Override
 	public String toString() {
 		return x + " " + y + " " + z;
@@ -43,14 +51,30 @@ public class Vec3f extends Vec2f {
 		return new Vec3f(i.x, i.y, i.z);
 	}
 
+	public Vec3f normalize() {
+		final float a = 1.f / length();
+		x *= a;
+		y *= a;
+		z *= a;
+		return this; // for chaining
+	}
+	public Vec3f normalized() {
+		final float a = 1.f / length();
+		return new Vec3f(x * a, y * a, z * a);
+	}
+
 	public Vec3f translate(Vec3f other) {
 		this.x += other.x;
 		this.y += other.y;
 		this.z += other.z;
-		return this;
+		return this; // for chaining
 	}
 	public Vec3f transformed(Vec3f other) {
 		return new Vec3f(this.x + other.x, this.y + other.y, this.z + other.z);
+	}
+
+	public float dot(Vec3f other) {
+		return this.x * other.x + this.y * other.y + this.z * other.z;
 	}
 
 	public Vec3f crossed(Vec3f other) {

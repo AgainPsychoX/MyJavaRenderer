@@ -26,6 +26,10 @@ class Vec3fTest {
 		);
 	}
 
+	@Test void dotProduct() {
+		assertTrue(new Vec3f(1, 3, -5).dot(new Vec3f(4, -2, -1)) == 3);
+	}
+
 	@Test void crossProduct() {
 		assertTrue(
 			new Vec3f(1, 2, 3)

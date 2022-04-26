@@ -1,9 +1,11 @@
 package MyRenderer.math;
 
-public class Vec3i {
-	public int x;
-	public int y;
+public class Vec3i extends Vec2i {
 	public int z;
+
+	public int get(int i) {
+		return i == 0 ? x : i == 1 ? y : i == 2 ? z : 0;
+	}
 
 	@Override
 	public String toString() {
@@ -11,8 +13,7 @@ public class Vec3i {
 	}
 
 	public Vec3i(int x, int y, int z) {
-		this.x = x;
-		this.y = y;
+		super(x, y);
 		this.z = z;
 	}
 
