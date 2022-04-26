@@ -261,7 +261,7 @@ public class Renderer {
 		final int white = 0 | (0 << 8) | (0 << 16) | (0 << 24);
 		drawTriangle(A, B, C, white);
 	}
-	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, Vec3i color) {
+	public void drawTriangle(Vec2i A, Vec2i B, Vec2i C, Vec3i color) {
 		drawTriangle(A, B, C, color.toColorARGB());
 	}
 	public void drawTriangle(Vec2i A, Vec2i B, Vec2i C, int color) {
@@ -272,13 +272,13 @@ public class Renderer {
 			color
 		);
 	}
+	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, Vec3i color) {
+		drawTriangle(A, B, C, color.toColorARGB());
+	}
 	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, int color) {
-		final var xMin = Math.max(Math.round(Math.min(A.x, Math.min(B.x, C.x))), 0);
-		final var xMax = Math.min(Math.round(Math.max(A.x, Math.max(B.x, C.x))), width);
-		final var yMin = Math.max(Math.round(Math.min(A.y, Math.min(B.y, C.y))), 0);
-		final var yMax = Math.min(Math.round(Math.max(A.y, Math.max(B.y, C.y))), height);
-		for (int x = xMin; x <= xMax; x++) {
-			for (int y = yMin; y <= yMax; y++) {
+		final var bbox = new Vec2f.BBox(A).add(B).add(C).limit(0, width, 0, height);
+		for (int x = (int) bbox.xMin; x <= bbox.xMax; x++) {
+			for (int y = (int) bbox.yMin; y <= bbox.yMax; y++) {
 				final var barycentric = Vec3f.barycentric(A, B, C, new Vec2f(x, y));
 				if (
 					0 <= barycentric.x && barycentric.x <= 1 &&

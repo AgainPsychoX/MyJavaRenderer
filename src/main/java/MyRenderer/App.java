@@ -10,7 +10,7 @@ public class App {
 		final int width = args.length >= 2 ? Integer.parseInt(args[1]) : 200;
 		final int height = args.length >= 3 ? Integer.parseInt(args[2]) : width;
 
-		final var mainRenderer = new RandomColorRenderer(filePath, width, height);
+		final var mainRenderer = new FlatShadingRenderer(filePath, width, height);
 
 		// Clear as black
 		final int black = 0xFF000000;

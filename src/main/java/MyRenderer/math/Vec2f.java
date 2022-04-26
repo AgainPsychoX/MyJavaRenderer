@@ -53,4 +53,34 @@ public class Vec2f {
 	public Vec2f transformed(Vec2f other) {
 		return new Vec2f(this.x + other.x, this.y + other.y);
 	}
+
+	static public class BBox {
+		public float xMin;
+		public float xMax;
+		public float yMin;
+		public float yMax;
+
+		public BBox(Vec2f initial) {
+			xMin = initial.x;
+			xMax = initial.x;
+			yMin = initial.y;
+			yMax = initial.y;
+		}
+
+		public BBox add(Vec2f next) {
+			xMin = Math.min(xMin, next.x);
+			xMax = Math.max(xMax, next.x);
+			yMin = Math.min(yMin, next.y);
+			yMax = Math.max(yMax, next.y);
+			return this; // for chaining
+		}
+
+		public BBox limit(float xMin, float xMax, float yMin, float yMax) {
+			this.xMin = Math.max(this.xMin, xMin);
+			this.xMax = Math.min(this.xMax, xMax);
+			this.yMin = Math.max(this.yMin, yMin);
+			this.yMax = Math.min(this.yMax, yMax);
+			return this; // for chaining
+		}
+	}
 }

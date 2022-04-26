@@ -21,7 +21,11 @@ public class Vec3i extends Vec2i {
 		return toColorARGB((byte) 0xFF);
 	}
 	public int toColorARGB(byte alpha) {
-		return alpha << 24 | ((x & 0xFF) << 16) | ((y & 0xFF) << 8) | (z & 0xFF);
+		return alpha << 24 
+			| (Math.min(Math.max(x, 0), 255) << 16) 
+			| (Math.min(Math.max(y, 0), 255) << 8) 
+			|  Math.min(Math.max(z, 0), 255)
+		;
 	}
 
 	public Vec3i translate(Vec3i other) {

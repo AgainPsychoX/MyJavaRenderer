@@ -47,6 +47,9 @@ public class Vec3f extends Vec2f {
 		this.z = z;
 	}
 
+	public Vec3i toVec3i() {
+		return new Vec3i(Math.round(x), Math.round(y), Math.round(z));
+	}
 	public static Vec3f fromVec3i(Vec3i i) {
 		return new Vec3f(i.x, i.y, i.z);
 	}
@@ -61,6 +64,16 @@ public class Vec3f extends Vec2f {
 	public Vec3f normalized() {
 		final float a = 1.f / length();
 		return new Vec3f(x * a, y * a, z * a);
+	}
+
+	public Vec3f multiply(float value) {
+		x *= value;
+		y *= value;
+		z *= value;
+		return this; // for chaining
+	}
+	public Vec3f multiplied(float value) {
+		return new Vec3f(x * value, y * value, z * value);
 	}
 
 	public Vec3f translate(Vec3f other) {
