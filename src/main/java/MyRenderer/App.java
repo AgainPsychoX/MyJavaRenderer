@@ -22,8 +22,8 @@ public class App {
 			testZBuffer(mainRenderer);
 
 			// Render deer
-			// final var model = Model.fromOBJFile("deer.obj");
-			// mainRenderer.render(model);
+			final var model = Model.fromOBJFile("deer.obj");
+			mainRenderer.render(model);
 
 			mainRenderer.save();
 		} catch (IOException ex) {

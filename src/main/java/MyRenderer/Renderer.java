@@ -303,22 +303,9 @@ public class Renderer {
 					0 <= barycentric.y && barycentric.y <= 1 &&
 					0 <= barycentric.z && barycentric.z <= 1
 				) {
-					// final float z = 1.f / barycentric.dot(new Vec3f(1.f / A.z, 1.f / B.z, 1.f / C.z));
-					// final float z = barycentric.dot(new Vec3f(A.z, B.z, C.z));
 					final float z = barycentric.dot(new Vec3f(A.z, C.z, B.z));
-					// final float z = barycentric.dot(new Vec3f(A.z, B.z, C.z).normalize());
-					// final float z = barycentric.dot(new Vec3f(C.z, B.z, A.z).normalize());
 					if (zbuffer.set(x, y, z)) {
-						//render.setRGB(x, y, color);
-						
-						// render.setRGB(x, y, (color & 0xFFFFFF00) | (Math.round(z * 0xFF) & 0xFF));
-						
-						// int part = Math.round(z * 0xFF) & 0xFF;
-						// render.setRGB(x, y, (color & 0xFF000000) | part << 16 | part << 8 | part);
-
-						// render.setRGB(x, y, barycentric.multiplied(0xFF).toVec3i().toColorARGB());
-
-						render.setRGB(x, y, barycentric.multiplied(Math.round(z * 0xFF) & 0xFF).toVec3i().toColorARGB());
+						render.setRGB(x, y, color);
 					}
 				}
 			}
