@@ -128,4 +128,15 @@ public class Vec3f extends Vec2f {
 		final var uv = new Vec2f(cross.x / cross.z, cross.y / cross.z);
 		return new Vec3f(uv.x, uv.y, 1 - uv.x - uv.y);
 	}
+
+	/**
+	 * Creates vector as result of interpolation vector A into B using given factor.
+	 */
+	public static Vec3f interpolated(Vec3f A, Vec3f B, float factor) {
+		return new Vec3f(
+			A.x * (1.f - factor) + B.x * factor,
+			A.y * (1.f - factor) + B.y * factor,
+			A.z * (1.f - factor) + B.z * factor
+		);
+	}
 }

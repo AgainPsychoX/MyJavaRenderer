@@ -56,28 +56,49 @@ public class App {
 		
 		final int a = Math.min(renderer.width, renderer.height) / 8;
 
+		// Basic test
 		renderer.drawTriangle(
-			new Vec3f(a * 2, a * 1, 0),
-			new Vec3f(a * 4, a * 1, 0),
-			new Vec3f(a * 2, a * 7, 1),
-			red
-		);
-		renderer.drawTriangle(
-			new Vec3f(a * 4, a * 7, 0),
-			new Vec3f(a * 6, a * 7, 0),
-			new Vec3f(a * 6, a * 1, 1),
+			new Vec3f(a * 0, a * 0, 0.5f),
+			new Vec3f(a * 1, a * 0, 0.5f),
+			new Vec3f(a * 0, a * 1, 0.5f),
 			green
 		);
 		renderer.drawTriangle(
-			new Vec3f(a * 7, a * 2, 0),
-			new Vec3f(a * 7, a * 4, 0),
-			new Vec3f(a * 1, a * 2, 1),
+			new Vec3f(a * 0.5f, a * 0f, 0.7f),
+			new Vec3f(a * 1.5f, a * 0f, 0.7f),
+			new Vec3f(a * 0.5f, a * 1f, 0.7f),
+			red
+		);
+		renderer.drawTriangle(
+			new Vec3f(a * 0.25f, a * 0.5f, 0.3f),
+			new Vec3f(a * 1.25f, a * 0.5f, 0.3f),
+			new Vec3f(a * 0.25f, a * 1.5f, 0.3f),
+			blue
+		);
+
+		// Overlapping triangles
+		renderer.drawTriangle(
+			new Vec3f(a * 2, a * 1, 0.2f),
+			new Vec3f(a * 4, a * 1, 0.2f),
+			new Vec3f(a * 2, a * 7, 0.8f),
+			red
+		);
+		renderer.drawTriangle(
+			new Vec3f(a * 4, a * 7, 0.2f),
+			new Vec3f(a * 6, a * 7, 0.2f),
+			new Vec3f(a * 6, a * 1, 0.8f),
+			green
+		);
+		renderer.drawTriangle(
+			new Vec3f(a * 7, a * 2, 0.2f),
+			new Vec3f(a * 7, a * 4, 0.2f),
+			new Vec3f(a * 1, a * 2, 0.8f),
 			blue
 		);
 		renderer.drawTriangle(
-			new Vec3f(a * 1, a * 4, 0),
-			new Vec3f(a * 1, a * 6, 0),
-			new Vec3f(a * 7, a * 6, 1),
+			new Vec3f(a * 1, a * 4, 0.2f),
+			new Vec3f(a * 1, a * 6, 0.2f),
+			new Vec3f(a * 7, a * 6, 0.8f),
 			yellow
 		);
 	}

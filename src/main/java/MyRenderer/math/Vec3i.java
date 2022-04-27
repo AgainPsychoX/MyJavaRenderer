@@ -37,4 +37,24 @@ public class Vec3i extends Vec2i {
 	public Vec3i added(Vec3i other) {
 		return new Vec3i(this.x + other.x, this.y + other.y, this.z + other.z);
 	}
+
+	public Vec3i subtract(Vec3i other) {
+		this.x -= other.x;
+		this.y -= other.y;
+		this.z -= other.z;
+		return this; // for chaining
+	}
+	public Vec3i subtracted(Vec3i other) {
+		return new Vec3i(this.x - other.x, this.y - other.y, this.z - other.z);
+	}
+
+	public Vec3i multiply(int value) {
+		x *= value;
+		y *= value;
+		z *= value;
+		return this; // for chaining
+	}
+	public Vec3i multiplied(int value) {
+		return new Vec3i(x * value, y * value, z * value);
+	}
 }

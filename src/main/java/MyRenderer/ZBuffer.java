@@ -15,7 +15,7 @@ public class ZBuffer {
 	 */
 	public boolean set(int x, int y, float value) {
 		final float old = buffer[width * y + x];
-		if (value <= old) {
+		if (old <= value) {
 			buffer[width * y + x] = value;
 			return true;
 		}
@@ -29,6 +29,6 @@ public class ZBuffer {
 	public ZBuffer(int width, int height) {
 		this.width = width;
 		buffer = new float[height * width];
-		Arrays.fill(buffer, Float.POSITIVE_INFINITY);
+		Arrays.fill(buffer, Float.NEGATIVE_INFINITY);
 	}
 }
