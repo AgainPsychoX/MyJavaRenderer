@@ -18,23 +18,23 @@ public class Vec3i extends Vec2i {
 	}
 
 	public int toColorARGB() {
-		return toColorARGB((byte) 0xFF);
+		return toColorARGB(0xFF);
 	}
-	public int toColorARGB(byte alpha) {
-		return alpha << 24 
+	public int toColorARGB(int alpha) {
+		return (alpha & 0xFF) << 24 
 			| (Math.min(Math.max(x, 0), 255) << 16) 
 			| (Math.min(Math.max(y, 0), 255) << 8) 
 			|  Math.min(Math.max(z, 0), 255)
 		;
 	}
 
-	public Vec3i translate(Vec3i other) {
+	public Vec3i add(Vec3i other) {
 		this.x += other.x;
 		this.y += other.y;
 		this.z += other.z;
 		return this;
 	}
-	public Vec3i translated(Vec3i other) {
+	public Vec3i added(Vec3i other) {
 		return new Vec3i(this.x + other.x, this.y + other.y, this.z + other.z);
 	}
 }

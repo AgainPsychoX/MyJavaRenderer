@@ -22,12 +22,12 @@ public class Vec2i {
 		return new Vec2i(a.x - b.x, a.y - b.y);
 	}
 
-	public Vec2i translate(Vec2i other) {
+	public Vec2i add(Vec2i other) {
 		this.x += other.x;
 		this.y += other.y;
 		return this;
 	}
-	public Vec2i transformed(Vec2i other) {
+	public Vec2i added(Vec2i other) {
 		return new Vec2i(this.x + other.x, this.y + other.y);
 	}
 }

@@ -45,12 +45,12 @@ public class Vec2f {
 		return new Vec2f(a.x - b.x, a.y - b.y);
 	}
 
-	public Vec2f translate(Vec2f other) {
+	public Vec2f add(Vec2f other) {
 		this.x += other.x;
 		this.y += other.y;
 		return this;
 	}
-	public Vec2f transformed(Vec2f other) {
+	public Vec2f added(Vec2f other) {
 		return new Vec2f(this.x + other.x, this.y + other.y);
 	}
 

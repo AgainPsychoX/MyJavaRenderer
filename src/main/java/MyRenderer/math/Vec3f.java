@@ -66,6 +66,36 @@ public class Vec3f extends Vec2f {
 		return new Vec3f(x * a, y * a, z * a);
 	}
 
+	public Vec3f negate() {
+		x *= -1;
+		y *= -1;
+		z *= -1;
+		return this; // for chaining
+	}
+	public Vec3f negated() {
+		return new Vec3f(-x, -y, -z);
+	}
+
+	public Vec3f add(Vec3f other) {
+		this.x += other.x;
+		this.y += other.y;
+		this.z += other.z;
+		return this; // for chaining
+	}
+	public Vec3f added(Vec3f other) {
+		return new Vec3f(this.x + other.x, this.y + other.y, this.z + other.z);
+	}
+
+	public Vec3f subtract(Vec3f other) {
+		this.x -= other.x;
+		this.y -= other.y;
+		this.z -= other.z;
+		return this; // for chaining
+	}
+	public Vec3f subtracted(Vec3f other) {
+		return new Vec3f(this.x - other.x, this.y - other.y, this.z - other.z);
+	}
+
 	public Vec3f multiply(float value) {
 		x *= value;
 		y *= value;
@@ -74,16 +104,6 @@ public class Vec3f extends Vec2f {
 	}
 	public Vec3f multiplied(float value) {
 		return new Vec3f(x * value, y * value, z * value);
-	}
-
-	public Vec3f translate(Vec3f other) {
-		this.x += other.x;
-		this.y += other.y;
-		this.z += other.z;
-		return this; // for chaining
-	}
-	public Vec3f transformed(Vec3f other) {
-		return new Vec3f(this.x + other.x, this.y + other.y, this.z + other.z);
 	}
 
 	public float dot(Vec3f other) {

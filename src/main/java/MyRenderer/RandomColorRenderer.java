@@ -10,7 +10,9 @@ public class RandomColorRenderer extends Renderer {
 	}
 
 	void render(Model model) {
-		for (Vec3i face : model.getFaceList()) {
+		int count = model.facesCount();
+		for (int i = 0; i < count; i++) {
+			final Vec3i face = model.getFace(i);
 			final Vec2i[] screenCoords = new Vec2i[3];
 			for (int j = 0; j < 3; j++) {
 				final Vec3f worldCoord = model.getVertex(face.get(j));
