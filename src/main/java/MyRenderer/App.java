@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import MyRenderer.math.Vec3f;
+
 public class App {
 	public static void main(String[] args) {
 		final String filePath = args.length >= 1 ? args[0] : (System.getProperty("user.home") + "/render.png");
@@ -17,9 +19,11 @@ public class App {
 		mainRenderer.clear(black);
 
 		try {
+			testZBuffer(mainRenderer);
+
 			// Render deer
-			final var model = Model.fromOBJFile("deer.obj");
-			mainRenderer.render(model);
+			// final var model = Model.fromOBJFile("deer.obj");
+			// mainRenderer.render(model);
 
 			mainRenderer.save();
 		} catch (IOException ex) {
@@ -42,5 +46,39 @@ public class App {
 			renderer.drawLine(x0, y0, x1, y1);
 			System.out.println("%d\t%.4f\tA:\t%d\t%d\tB:\t%d\t%d".formatted(i, angle, x0, y0, x1, y1));
 		}
+	}
+
+	public static void testZBuffer(final Renderer renderer) {
+		final int red    = 0xFFFF0000;
+		final int green  = 0xFF00FF00;
+		final int blue   = 0xFF0000FF;
+		final int yellow = red | green;
+		
+		final int a = Math.min(renderer.width, renderer.height) / 8;
+
+		renderer.drawTriangle(
+			new Vec3f(a * 2, a * 1, 0),
+			new Vec3f(a * 4, a * 1, 0),
+			new Vec3f(a * 2, a * 7, 1),
+			red
+		);
+		renderer.drawTriangle(
+			new Vec3f(a * 4, a * 7, 0),
+			new Vec3f(a * 6, a * 7, 0),
+			new Vec3f(a * 6, a * 1, 1),
+			green
+		);
+		renderer.drawTriangle(
+			new Vec3f(a * 7, a * 2, 0),
+			new Vec3f(a * 7, a * 4, 0),
+			new Vec3f(a * 1, a * 2, 1),
+			blue
+		);
+		renderer.drawTriangle(
+			new Vec3f(a * 1, a * 4, 0),
+			new Vec3f(a * 1, a * 6, 0),
+			new Vec3f(a * 7, a * 6, 1),
+			yellow
+		);
 	}
 }

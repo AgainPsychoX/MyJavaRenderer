@@ -3,7 +3,8 @@
 		"bbox",
 		"bresen",
 		"BRESENHAM",
-		"derr"
+		"derr",
+		"zbuffer"
 	],
 	"java.configuration.updateBuildConfiguration": "interactive",
 	"java.autobuild.enabled": true

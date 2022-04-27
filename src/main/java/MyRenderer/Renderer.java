@@ -40,6 +40,8 @@ public class Renderer {
 	public final int width;
 	public LineAlgorithm lineAlgorithm;
 
+	protected final ZBuffer zbuffer;
+
 	/// Color used to draw anything.
 	protected int color = white;
 
@@ -55,6 +57,7 @@ public class Renderer {
 		this.width = width;
 		this.height = height;
 		this.lineAlgorithm = lineAlgorithm;
+		this.zbuffer = new ZBuffer(width, height);
 	}
 
 	private static final int white = 255 | (255 << 8) | (255 << 16) | (255 << 24);
@@ -286,6 +289,24 @@ public class Renderer {
 					0 <= barycentric.z && barycentric.z <= 1
 				) {
 					render.setRGB(x, y, color);
+				}
+			}
+		}
+	}
+	public void drawTriangle(Vec3f A, Vec3f B, Vec3f C, int color) {
+		final var bbox = new Vec2f.BBox(A).add(B).add(C).limit(0, width, 0, height);
+		for (int x = (int) bbox.xMin; x <= bbox.xMax; x++) {
+			for (int y = (int) bbox.yMin; y <= bbox.yMax; y++) {
+				final var barycentric = Vec3f.barycentric(A, B, C, new Vec2f(x, y));
+				if (
+					0 <= barycentric.x && barycentric.x <= 1 &&
+					0 <= barycentric.y && barycentric.y <= 1 &&
+					0 <= barycentric.z && barycentric.z <= 1
+				) {
+					final float z = barycentric.dot(new Vec3f(A.z, B.z, C.z));
+					if (zbuffer.set(x, y, z)) {
+						render.setRGB(x, y, color);
+					}
 				}
 			}
 		}
