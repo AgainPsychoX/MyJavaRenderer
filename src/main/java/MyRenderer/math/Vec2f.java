@@ -13,7 +13,7 @@ public class Vec2f {
 		return x + " " + y;
 	}
 
-	public static final float EPSILON = 1e-9f;
+	public static final float EPSILON = 1e-7f;
 
 	@Override
 	public boolean equals(Object o) {

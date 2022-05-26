@@ -35,7 +35,7 @@ public class Renderer {
 		final static LineAlgorithm DEFAULT = LineAlgorithm.BRESENHAM_INT;
 	}
 
-	private BufferedImage render;
+	protected BufferedImage image;
 	public final int height;
 	public final int width;
 	public LineAlgorithm lineAlgorithm;
@@ -52,7 +52,7 @@ public class Renderer {
 	}
 
 	public Renderer(String filename, int width, int height, LineAlgorithm lineAlgorithm) {
-		render = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		this.filename = filename;
 		this.width = width;
 		this.height = height;
@@ -63,7 +63,7 @@ public class Renderer {
 	private static final int white = 255 | (255 << 8) | (255 << 16) | (255 << 24);
 
 	public void drawPoint(int x, int y) {
-		render.setRGB(x, y, color);
+		image.setRGB(x, y, color);
 	}
 
 	public void drawLine(int x0, int y0, int x1, int y1) {
@@ -279,7 +279,7 @@ public class Renderer {
 		drawTriangle(A, B, C, color.toColorARGB());
 	}
 	public void drawTriangle(Vec2f A, Vec2f B, Vec2f C, int color) {
-		final var bbox = new Vec2f.BBox(A).add(B).add(C).limit(0, width, 0, height);
+		final var bbox = new Vec2f.BBox(A).add(B).add(C).limit(0, width - 1, 0, height - 1);
 		for (int x = (int) bbox.xMin; x <= bbox.xMax; x++) {
 			for (int y = (int) bbox.yMin; y <= bbox.yMax; y++) {
 				final var barycentric = Vec3f.barycentric(A, B, C, new Vec2f(x, y));
@@ -288,13 +288,13 @@ public class Renderer {
 					0 <= barycentric.y && barycentric.y <= 1 &&
 					0 <= barycentric.z && barycentric.z <= 1
 				) {
-					render.setRGB(x, y, color);
+					image.setRGB(x, y, color);
 				}
 			}
 		}
 	}
 	public void drawTriangle(Vec3f A, Vec3f B, Vec3f C, int color) {
-		final var bbox = new Vec2f.BBox(A).add(B).add(C).limit(0, width, 0, height);
+		final var bbox = new Vec2f.BBox(A).add(B).add(C).limit(0, width - 1, 0, height - 1);
 		for (int x = (int) bbox.xMin; x <= bbox.xMax; x++) {
 			for (int y = (int) bbox.yMin; y <= bbox.yMax; y++) {
 				final var barycentric = Vec3f.barycentric(A, B, C, new Vec2f(x, y));
@@ -303,9 +303,9 @@ public class Renderer {
 					0 <= barycentric.y && barycentric.y <= 1 &&
 					0 <= barycentric.z && barycentric.z <= 1
 				) {
-					final float z = barycentric.dot(new Vec3f(A.z, C.z, B.z));
+					final float z = barycentric.dot(new Vec3f(A.z, C.z, B.z).normalize());
 					if (zbuffer.set(x, y, z)) {
-						render.setRGB(x, y, color);
+						image.setRGB(x, y, color);
 					}
 				}
 			}
@@ -321,15 +321,15 @@ public class Renderer {
 	public void clear(int color) {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				render.setRGB(x, y, color);
+				image.setRGB(x, y, color);
 			}
 		}
 	}
 
 	public void save() throws IOException {
 		File outputFile = new File(filename);
-		render = Renderer.verticalFlip(render);
-		ImageIO.write(render, "png", outputFile);
+		image = Renderer.verticalFlip(image);
+		ImageIO.write(image, "png", outputFile);
 	}
 
 	public static BufferedImage verticalFlip(BufferedImage img) {

@@ -10,7 +10,7 @@ public class Model {
 	protected ArrayList<Vec3i> faces;
 	protected ArrayList<Vec3f> facesNormals;
 
-	public int verticesCount() { return faces.size(); }
+	public int verticesCount() { return vertices.size(); }
 	public int facesCount() { return faces.size(); }
 
 	public Vec3f getVertex(int index) { return vertices.get(index); }
@@ -85,5 +85,19 @@ public class Model {
 			Integer.parseInt(splitted[2].split("/")[0]),
 			Integer.parseInt(splitted[3].split("/")[0])
 		);
+	}
+
+	/**
+	 * Translates all vertices in the model by given vector.
+	 * @param v Vector to translate all vertices by.
+	 * @return The model, for chaining.
+	 */
+	public Model translate(final Vec3f v) {
+		int count = verticesCount();
+		for (int i = 0; i < count; i++) {
+			getVertex(i).add(v);
+		}
+		calculateNormals();
+		return this; // for chaining
 	}
 }

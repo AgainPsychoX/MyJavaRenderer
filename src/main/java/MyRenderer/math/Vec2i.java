@@ -30,4 +30,34 @@ public class Vec2i {
 	public Vec2i added(Vec2i other) {
 		return new Vec2i(this.x + other.x, this.y + other.y);
 	}
+
+	static public class BBox {
+		public int xMin;
+		public int xMax;
+		public int yMin;
+		public int yMax;
+
+		public BBox(Vec2i initial) {
+			xMin = initial.x;
+			xMax = initial.x;
+			yMin = initial.y;
+			yMax = initial.y;
+		}
+
+		public BBox add(Vec2i next) {
+			xMin = Math.min(xMin, next.x);
+			xMax = Math.max(xMax, next.x);
+			yMin = Math.min(yMin, next.y);
+			yMax = Math.max(yMax, next.y);
+			return this; // for chaining
+		}
+
+		public BBox limit(int xMin, int xMax, int yMin, int yMax) {
+			this.xMin = Math.max(this.xMin, xMin);
+			this.xMax = Math.min(this.xMax, xMax);
+			this.yMin = Math.max(this.yMin, yMin);
+			this.yMax = Math.min(this.yMax, yMax);
+			return this; // for chaining
+		}
+	}
 }

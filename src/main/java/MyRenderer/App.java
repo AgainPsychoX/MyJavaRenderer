@@ -19,11 +19,12 @@ public class App {
 		mainRenderer.clear(black);
 
 		try {
-			testZBuffer(mainRenderer);
-
 			// Render deer
-			final var model = Model.fromOBJFile("deer.obj");
-			mainRenderer.render(model);
+			final var deer = Model.fromOBJFile("deer.obj");
+			deer.translate(new Vec3f(0f, -0.8f, 0.5f));
+			mainRenderer.render(deer);
+			deer.translate(new Vec3f(0.2f, 0, -0.5f));
+			mainRenderer.render(deer);
 
 			mainRenderer.save();
 		} catch (IOException ex) {

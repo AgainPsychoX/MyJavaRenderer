@@ -2,6 +2,11 @@ package MyRenderer;
 
 import java.util.Arrays;
 
+/**
+ * Z Buffer.
+ * 
+ * Higher values mean closer to the observer.
+ */
 public class ZBuffer {
 	protected final int width;
 	protected final float[] buffer;
