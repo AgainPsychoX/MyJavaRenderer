@@ -26,7 +26,10 @@ public class Matrix4f {
 	}
 
 	public Matrix4f(Matrix4f other) {
-		this.data = other.data.clone();
+		this.data = new float[4][];
+		for(int i = 0; i < 4; i++) {
+			this.data[i] = other.data[i].clone();
+		}
 	}
 
 	public Matrix4f(
