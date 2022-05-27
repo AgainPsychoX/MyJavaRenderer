@@ -303,7 +303,7 @@ public class Renderer {
 					0 <= barycentric.y && barycentric.y <= 1 &&
 					0 <= barycentric.z && barycentric.z <= 1
 				) {
-					final float z = barycentric.dot(new Vec3f(A.z, C.z, B.z).normalize());
+					final float z = barycentric.dot(new Vec3f(A.z, C.z, B.z));
 					if (zbuffer.set(x, y, z)) {
 						image.setRGB(x, y, color);
 					}

@@ -5,14 +5,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import MyRenderer.math.*;
 
 public class FlatShadingRenderer extends Renderer {
-	Vec3f cameraEye = new Vec3f(0f, 0, 1f);
+	// Vec3f cameraEye = new Vec3f(0f, 0, 1f);
 	// Vec3f cameraEye = new Vec3f(1f, 0, 0f);
 	// Vec3f cameraEye = new Vec3f(0.5f, 0, 0.5f);
-	// Vec3f cameraEye = new Vec3f(0.5f, 0.5f, 0.5f);
-	Vec3f cameraDirection = new Vec3f(0f, 0, -1f).normalize();
+	Vec3f cameraEye = new Vec3f(1f, 1f, 1f);
+	// Vec3f cameraDirection = new Vec3f(0f, 0, -1f).normalize();
 	// Vec3f cameraDirection = new Vec3f(-1f, 0, 0f).normalize();
 	// Vec3f cameraDirection = new Vec3f(-0.5f, 0, -0.5f).normalize();
-	// Vec3f cameraDirection = new Vec3f(-1f, -1f, -1f).normalize();
+	Vec3f cameraDirection = new Vec3f(-1f, -1f, -1f).normalize();
 	Vec3f cameraUp = new Vec3f(0, 1, 0);
 
 	Vec3f diffuseLightColor = new Vec3f(255, 255, 255);
@@ -20,10 +20,9 @@ public class FlatShadingRenderer extends Renderer {
 	public FlatShadingRenderer(String filename, int width, int height) {
 		super(filename, width, height);
 		matrix = Matrix4f.viewport(width, height)
-			// .multiply(Matrix4f.perspective(-1, 1, 1, -1, -1f, 1))
-			// .multiply(Matrix4f.perspective(-1, 1, 1, -1, -1, 1))
-			.multiply(Matrix4f.orthogonal(-1, 1, 1, -1, -1, 1))
-			// .multiply(Matrix4f.orthogonal(-1, 1, 1, -1, -10, 10))
+			.multiply(Matrix4f.perspective(-1, 1, 1, -1, -1, 1))
+			// .multiply(Matrix4f.orthogonal (-1, 1, 1, -1, -1, 1))
+			// .multiply(Matrix4f.orthogonal(-1, 1, 1, -1, -1, 1))
 			.multiply(Matrix4f.camera(cameraEye, cameraDirection, cameraUp))
 		;
 	}

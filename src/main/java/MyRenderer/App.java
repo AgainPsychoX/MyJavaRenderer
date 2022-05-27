@@ -21,9 +21,11 @@ public class App {
 		try {
 			// Render deer
 			final var deer = Model.fromOBJFile("deer.obj");
-			deer.translate(new Vec3f(0f, -0.8f, 0.5f));
+			deer.translate(new Vec3f(0f, -0.8f, 0));
+
+			deer.translate(new Vec3f(0f, 0, 0.4f));
 			mainRenderer.render(deer);
-			deer.translate(new Vec3f(0.2f, 0, -0.5f));
+			deer.translate(new Vec3f(0.2f, 0, -0.8f));
 			mainRenderer.render(deer);
 
 			mainRenderer.save();
