@@ -34,15 +34,16 @@ public class Vec2f {
 		this.y = y;
 	}
 
+	public void set(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
+
 	public static Vec2f fromVec2i(Vec2i i) {
 		return new Vec2f(i.x, i.y);
 	}
 	public Vec2i toVec2i() {
 		return new Vec2i(Math.round(x), Math.round(y));
-	}
-
-	public static Vec2f fromPoints(Vec2f a, Vec2f b) {
-		return new Vec2f(a.x - b.x, a.y - b.y);
 	}
 
 	public Vec2f add(Vec2f other) {
@@ -52,6 +53,15 @@ public class Vec2f {
 	}
 	public Vec2f added(Vec2f other) {
 		return new Vec2f(this.x + other.x, this.y + other.y);
+	}
+
+	public Vec2f subtract(Vec2f other) {
+		this.x -= other.x;
+		this.y -= other.y;
+		return this; // for chaining
+	}
+	public Vec2f subtracted(Vec2f other) {
+		return new Vec2f(this.x - other.x, this.y - other.y);
 	}
 
 	static public class BBox {

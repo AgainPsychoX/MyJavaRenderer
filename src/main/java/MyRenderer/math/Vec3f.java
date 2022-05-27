@@ -47,6 +47,11 @@ public class Vec3f extends Vec2f {
 		this.z = z;
 	}
 
+	public void set(float x, float y, float z) {
+		super.set(x, y);
+		this.z = z;
+	}
+
 	public Vec3i toVec3i() {
 		return new Vec3i(Math.round(x), Math.round(y), Math.round(z));
 	}
@@ -119,9 +124,9 @@ public class Vec3f extends Vec2f {
 	}
 
 	public static Vec3f barycentric(Vec2f A, Vec2f B, Vec2f C, Vec2f P) {
-		final var ab = Vec2f.fromPoints(A, B);
-		final var ac = Vec2f.fromPoints(A, C);
-		final var pa = Vec2f.fromPoints(P, A);
+		final var ab = A.subtracted(B);
+		final var ac = A.subtracted(C);
+		final var pa = P.subtracted(A);
 		final var v1 = new Vec3f(ab.x, ac.x, pa.x);
 		final var v2 = new Vec3f(ab.y, ac.y, pa.y);
 		final var cross = v1.crossed(v2);

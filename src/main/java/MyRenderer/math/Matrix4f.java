@@ -151,19 +151,18 @@ public class Matrix4f {
 		return this; // for chaining
 	}
 
-	public Matrix4f multiplied(Matrix4f m) {
+	public Matrix4f multiplied(final Matrix4f m) {
 		return new Matrix4f(this).multiply(m);
 	}
 
 	/**
 	 * Prepares camera transform matrix.
 	 * @param eye Eye/camera position in the world.
-	 * @param direction Normalized direction vector.
+	 * @param w Negated normalized direction vector (forward vector).
 	 * @param up View up vector.
 	 * @return The prepared matrix.
 	 */
-	public static Matrix4f camera(final Vec3f eye, final Vec3f direction, final Vec3f up) {
-		final Vec3f w = direction.negated();
+	public static Matrix4f camera(final Vec3f eye, final Vec3f w, final Vec3f up) {
 		final Vec3f u = up.crossed(w).normalize();
 		final Vec3f v = w.crossed(u);
 		return new Matrix4f(
@@ -217,6 +216,10 @@ public class Matrix4f {
 		);
 	}
 
+	public static Matrix4f orthogonal() {
+		return orthogonal(-1, 1, 1, -1, -1, 1);
+	}
+
 	/**
 	 * Prepares perspective transformation matrix.
 	 * @param l left 
@@ -238,5 +241,9 @@ public class Matrix4f {
 			0, 0, (n + f) / (n - f), (n * f * 2) / (f - n),
 			0, 0, 1, 0
 		);
+	}
+
+	public static Matrix4f perspective() {
+		return perspective(-1, 1, 1, -1, -1, 1);
 	}
 }

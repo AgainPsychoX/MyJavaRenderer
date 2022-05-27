@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import MyRenderer.math.Matrix4f;
 import MyRenderer.math.Vec3f;
 
 public class App {
@@ -19,13 +20,16 @@ public class App {
 		mainRenderer.clear(black);
 
 		try {
+			mainRenderer.setupCamera(new Vec3f(1.5f, 1.5f, 1.5f), new Vec3f(0, 0, 0));
+			// mainRenderer.setPerspectiveMatrix(Matrix4f.orthogonal());
+			// mainRenderer.setPerspectiveMatrix(Matrix4f.perspective());
+
 			// Render deer
 			final var deer = Model.fromOBJFile("deer.obj");
-			deer.translate(new Vec3f(0f, -0.8f, 0));
 
 			deer.translate(new Vec3f(0f, 0, 0.4f));
 			mainRenderer.render(deer);
-			deer.translate(new Vec3f(0.2f, 0, -0.8f));
+			deer.translate(new Vec3f(0.4f, 0, -0.8f));
 			mainRenderer.render(deer);
 
 			mainRenderer.save();
